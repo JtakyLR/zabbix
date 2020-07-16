@@ -9,8 +9,8 @@
     </groups>
     <templates>
         <template>
-            <template>Template Module Windows network by JTakyLR</template>
-            <name>Template Module Windows network by JTakyLR</name>
+            <template>Template Module Windows network by JtakyLR</template>
+            <name>Template Module Windows network by JtakyLR</name>
             <groups>
                 <group>
                     <name>Templates/_TEST/_Modules</name>
@@ -248,12 +248,12 @@ WARNING: if closed manually - won't fire again on next poll, because of .diff.</
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>({Template Module Windows network by JTakyLR:net.if.in[&quot;{#IFNAME}&quot;].avg(15m)}&gt;({$IF.UTIL.MAX:&quot;{#IFNAME}&quot;}/100)*{Template Module Windows network by JTakyLR:net.if.speed[&quot;{#IFNAME}&quot;].last()} or&#13;
-{Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;].avg(15m)}&gt;({$IF.UTIL.MAX:&quot;{#IFNAME}&quot;}/100)*{Template Module Windows network by JTakyLR:net.if.speed[&quot;{#IFNAME}&quot;].last()}) and&#13;
-{Template Module Windows network by JTakyLR:net.if.speed[&quot;{#IFNAME}&quot;].last()}&gt;0</expression>
+                            <expression>({Template Module Windows network by JtakyLR:net.if.in[&quot;{#IFNAME}&quot;].avg(15m)}&gt;({$IF.UTIL.MAX:&quot;{#IFNAME}&quot;}/100)*{Template Module Windows network by JtakyLR:net.if.speed[&quot;{#IFNAME}&quot;].last()} or&#13;
+{Template Module Windows network by JtakyLR:net.if.out[&quot;{#IFNAME}&quot;].avg(15m)}&gt;({$IF.UTIL.MAX:&quot;{#IFNAME}&quot;}/100)*{Template Module Windows network by JtakyLR:net.if.speed[&quot;{#IFNAME}&quot;].last()}) and&#13;
+{Template Module Windows network by JtakyLR:net.if.speed[&quot;{#IFNAME}&quot;].last()}&gt;0</expression>
                             <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-                            <recovery_expression>{Template Module Windows network by JTakyLR:net.if.in[&quot;{#IFNAME}&quot;].avg(15m)}&lt;(({$IF.UTIL.MAX:&quot;{#IFNAME}&quot;}-3)/100)*{Template Module Windows network by JTakyLR:net.if.speed[&quot;{#IFNAME}&quot;].last()} and&#13;
-{Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;].avg(15m)}&lt;(({$IF.UTIL.MAX:&quot;{#IFNAME}&quot;}-3)/100)*{Template Module Windows network by JTakyLR:net.if.speed[&quot;{#IFNAME}&quot;].last()}</recovery_expression>
+                            <recovery_expression>{Template Module Windows network by JtakyLR:net.if.in[&quot;{#IFNAME}&quot;].avg(15m)}&lt;(({$IF.UTIL.MAX:&quot;{#IFNAME}&quot;}-3)/100)*{Template Module Windows network by JtakyLR:net.if.speed[&quot;{#IFNAME}&quot;].last()} and&#13;
+{Template Module Windows network by JtakyLR:net.if.out[&quot;{#IFNAME}&quot;].avg(15m)}&lt;(({$IF.UTIL.MAX:&quot;{#IFNAME}&quot;}-3)/100)*{Template Module Windows network by JtakyLR:net.if.speed[&quot;{#IFNAME}&quot;].last()}</recovery_expression>
                             <name>Interface {#IFNAME}: High bandwidth usage ( &gt; {$IF.UTIL.MAX:&quot;{#IFNAME}&quot;}% )</name>
                             <opdata>In: {ITEM.LASTVALUE1}, out: {ITEM.LASTVALUE3}, speed: {ITEM.LASTVALUE2}</opdata>
                             <priority>WARNING</priority>
@@ -261,17 +261,17 @@ WARNING: if closed manually - won't fire again on next poll, because of .diff.</
                             <dependencies>
                                 <dependency>
                                     <name>Interface {#IFNAME}: Link down</name>
-                                    <expression>{Template Module Windows network by JTakyLR:net.if.status[&quot;{#IFNAME}&quot;].last()}= 3</expression>
-                                    <recovery_expression>{Template Module Windows network by JTakyLR:net.if.status[&quot;{#IFNAME}&quot;].last()}&lt;&gt; 3</recovery_expression>
+                                    <expression>{Template Module Windows network by JtakyLR:net.if.status[&quot;{#IFNAME}&quot;].last()}= 3</expression>
+                                    <recovery_expression>{Template Module Windows network by JtakyLR:net.if.status[&quot;{#IFNAME}&quot;].last()}&lt;&gt; 3</recovery_expression>
                                 </dependency>
                             </dependencies>
                         </trigger_prototype>
                         <trigger_prototype>
-                            <expression>{Template Module Windows network by JTakyLR:net.if.in[&quot;{#IFNAME}&quot;,errors].min(5m)}&gt;{$IF.ERRORS.WARN:&quot;{#IFNAME}&quot;}&#13;
-or {Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;,errors].min(5m)}&gt;{$IF.ERRORS.WARN:&quot;{#IFNAME}&quot;}</expression>
+                            <expression>{Template Module Windows network by JtakyLR:net.if.in[&quot;{#IFNAME}&quot;,errors].min(5m)}&gt;{$IF.ERRORS.WARN:&quot;{#IFNAME}&quot;}&#13;
+or {Template Module Windows network by JtakyLR:net.if.out[&quot;{#IFNAME}&quot;,errors].min(5m)}&gt;{$IF.ERRORS.WARN:&quot;{#IFNAME}&quot;}</expression>
                             <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-                            <recovery_expression>{Template Module Windows network by JTakyLR:net.if.in[&quot;{#IFNAME}&quot;,errors].max(5m)}&lt;{$IF.ERRORS.WARN:&quot;{#IFNAME}&quot;}*0.8&#13;
-and {Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;,errors].max(5m)}&lt;{$IF.ERRORS.WARN:&quot;{#IFNAME}&quot;}*0.8</recovery_expression>
+                            <recovery_expression>{Template Module Windows network by JtakyLR:net.if.in[&quot;{#IFNAME}&quot;,errors].max(5m)}&lt;{$IF.ERRORS.WARN:&quot;{#IFNAME}&quot;}*0.8&#13;
+and {Template Module Windows network by JtakyLR:net.if.out[&quot;{#IFNAME}&quot;,errors].max(5m)}&lt;{$IF.ERRORS.WARN:&quot;{#IFNAME}&quot;}*0.8</recovery_expression>
                             <name>Interface {#IFNAME}: High error rate ( &gt; {$IF.ERRORS.WARN:&quot;{#IFNAME}&quot;} for 5m)</name>
                             <opdata>errors in: {ITEM.LASTVALUE1}, errors out: {ITEM.LASTVALUE2}</opdata>
                             <priority>WARNING</priority>
@@ -279,8 +279,8 @@ and {Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;
                             <dependencies>
                                 <dependency>
                                     <name>Interface {#IFNAME}: Link down</name>
-                                    <expression>{Template Module Windows network by JTakyLR:net.if.status[&quot;{#IFNAME}&quot;].last()}= 3</expression>
-                                    <recovery_expression>{Template Module Windows network by JTakyLR:net.if.status[&quot;{#IFNAME}&quot;].last()}&lt;&gt; 3</recovery_expression>
+                                    <expression>{Template Module Windows network by JtakyLR:net.if.status[&quot;{#IFNAME}&quot;].last()}= 3</expression>
+                                    <recovery_expression>{Template Module Windows network by JtakyLR:net.if.status[&quot;{#IFNAME}&quot;].last()}&lt;&gt; 3</recovery_expression>
                                 </dependency>
                             </dependencies>
                         </trigger_prototype>
@@ -293,7 +293,7 @@ and {Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;
                                     <drawtype>GRADIENT_LINE</drawtype>
                                     <color>199C0D</color>
                                     <item>
-                                        <host>Template Module Windows network by JTakyLR</host>
+                                        <host>Template Module Windows network by JtakyLR</host>
                                         <key>net.if.in[&quot;{#IFNAME}&quot;]</key>
                                     </item>
                                 </graph_item>
@@ -302,7 +302,7 @@ and {Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;
                                     <drawtype>BOLD_LINE</drawtype>
                                     <color>F63100</color>
                                     <item>
-                                        <host>Template Module Windows network by JTakyLR</host>
+                                        <host>Template Module Windows network by JtakyLR</host>
                                         <key>net.if.out[&quot;{#IFNAME}&quot;]</key>
                                     </item>
                                 </graph_item>
@@ -310,7 +310,7 @@ and {Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;
                                     <sortorder>2</sortorder>
                                     <color>2774A4</color>
                                     <item>
-                                        <host>Template Module Windows network by JTakyLR</host>
+                                        <host>Template Module Windows network by JtakyLR</host>
                                         <key>net.if.in[&quot;{#IFNAME}&quot;,dropped]</key>
                                     </item>
                                 </graph_item>
@@ -318,7 +318,7 @@ and {Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;
                                     <sortorder>3</sortorder>
                                     <color>F7941D</color>
                                     <item>
-                                        <host>Template Module Windows network by JTakyLR</host>
+                                        <host>Template Module Windows network by JtakyLR</host>
                                         <key>net.if.in[&quot;{#IFNAME}&quot;,errors]</key>
                                     </item>
                                 </graph_item>
@@ -326,7 +326,7 @@ and {Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;
                                     <sortorder>4</sortorder>
                                     <color>FC6EA3</color>
                                     <item>
-                                        <host>Template Module Windows network by JTakyLR</host>
+                                        <host>Template Module Windows network by JtakyLR</host>
                                         <key>net.if.out[&quot;{#IFNAME}&quot;,dropped]</key>
                                     </item>
                                 </graph_item>
@@ -334,7 +334,7 @@ and {Template Module Windows network by JTakyLR:net.if.out[&quot;{#IFNAME}&quot;
                                     <sortorder>5</sortorder>
                                     <color>6C59DC</color>
                                     <item>
-                                        <host>Template Module Windows network by JTakyLR</host>
+                                        <host>Template Module Windows network by JtakyLR</host>
                                         <key>net.if.out[&quot;{#IFNAME}&quot;,errors]</key>
                                     </item>
                                 </graph_item>
