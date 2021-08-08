@@ -1,0 +1,61 @@
+zabbix_export:
+  version: '5.4'
+  date: '2021-08-08T15:32:47Z'
+  groups:
+    -
+      uuid: e0ef3687aa704dcc989ec22b0524f34a
+      name: Templates/_Undistributed
+  templates:
+    -
+      uuid: a48c556e4d2d4e779054301796664365
+      template: 'Template Asterisk PJSIP by JTakyLR'
+      name: 'Template Asterisk PJSIP by JTakyLR'
+      groups:
+        -
+          name: Templates/_Undistributed
+      discovery_rules:
+        -
+          uuid: 8005d50904a8455095f6831b7bd906ee
+          name: 'trunk_discovery[trunks]'
+          key: 'trunk_discovery[trunks]'
+          delay: 1h
+          lifetime: 3d
+          item_prototypes:
+            -
+              uuid: d2c82fcbcc524aa28edfdf5e2ab91922
+              name: 'Peer {#TRUNKNAME}] ipaddr'
+              key: 'trunk_discovery[ipaddr {#TRUNKNAME}]'
+              history: 7d
+              trends: '0'
+              value_type: TEXT
+              tags:
+                -
+                  tag: Application
+                  value: sip_trunks
+            -
+              uuid: 392b8f7728834a4280d85c6f762fd864
+              name: 'Peer {#TRUNKNAME}] status'
+              key: 'trunk_discovery[status {#TRUNKNAME}]'
+              history: 7d
+              trends: '0'
+              value_type: TEXT
+              tags:
+                -
+                  tag: Application
+                  value: sip_trunks
+          trigger_prototypes:
+            -
+              uuid: d86890dc039a480b87d2fe891abc3fe5
+              expression: 'find(/Template Asterisk PJSIP by JTakyLR/trunk_discovery[status {#TRUNKNAME}],,"like","0")=1 and nodata(/Template Asterisk PJSIP by JTakyLR/trunk_discovery[ipaddr {#TRUNKNAME}],1m)=0'
+              name: 'Транк {#TRUNKNAME} недоступен. IP: {ITEM.LASTVALUE2}'
+              opdata: 'IP: {ITEM.LASTVALUE2}'
+              priority: DISASTER
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.data
+      tags:
+        -
+          tag: alerts
+          value: voip
