@@ -1,0 +1,155 @@
+zabbix_export:
+  version: '5.4'
+  date: '2022-12-28T15:39:14Z'
+  groups:
+    -
+      uuid: e0ef3687aa704dcc989ec22b0524f34a
+      name: Templates/_Undistributed
+  templates:
+    -
+      uuid: b7562c6fb0604e44971028d31637aa36
+      template: 'Template CHECK DOMAINS by by JTakyLR'
+      name: 'Template CHECK DOMAINS by by JTakyLR'
+      groups:
+        -
+          name: Templates/_Undistributed
+      items:
+        -
+          uuid: f44e49b1676d483983ed6ca8adb8350a
+          name: check_crl
+          key: check_crl
+          delay: 1d
+          history: 7d
+          tags:
+            -
+              tag: EntityType
+              value: crl_domains
+          triggers:
+            -
+              uuid: 9d75e0893f2448f6b3644131024a3023
+              expression: 'last(/Template CHECK DOMAINS by by JTakyLR/check_crl)<{$CRL_DAY_EXPIRE}'
+              name: 'Истекает срок обновления CRL'
+              opdata: 'Осталось дней: {ITEM.LASTVALUE1}'
+              priority: WARNING
+              tags:
+                -
+                  tag: EntityType
+                  value: crl_domains
+      discovery_rules:
+        -
+          uuid: 67855a2259cc492b85003ed250400d7c
+          name: 'check_reg_discovery[reg_domains]'
+          key: 'check_reg_discovery[reg_domains]'
+          delay: 2h
+          lifetime: 0d
+          item_prototypes:
+            -
+              uuid: 90fcf9fb08a942148a3e22ed8482497e
+              name: 'REG DOMAIN DATE PAID {#REG_DOMAINS}'
+              key: 'check_reg_discovery[reg_datepaid {#REG_DOMAINS}]'
+              delay: 0h;h9
+              history: 7d
+              trends: '0'
+              value_type: TEXT
+              tags:
+                -
+                  tag: Application
+                  value: reg_domains
+            -
+              uuid: 3aa8b720f22146f4bcecaf446a8c1f33
+              name: 'REG DOMAIN DAYS LEFT {#REG_DOMAINS}'
+              key: 'check_reg_discovery[reg_daysleft {#REG_DOMAINS}]'
+              delay: 0h;h10
+              history: 7d
+              tags:
+                -
+                  tag: Application
+                  value: reg_domains
+              trigger_prototypes:
+                -
+                  uuid: df64e15eff444c039890d09fcc1e9b70
+                  expression: 'last(/Template CHECK DOMAINS by by JTakyLR/check_reg_discovery[reg_daysleft {#REG_DOMAINS}])<{$REG_DAY_EXPIRE}'
+                  name: 'Истекает регистрация домена - {#REG_DOMAINS}'
+                  opdata: 'Осталось дней: {ITEM.LASTVALUE1}'
+                  priority: WARNING
+                  dependencies:
+                    -
+                      name: 'Истек срок регистрации домена - {#REG_DOMAINS}'
+                      expression: 'last(/Template CHECK DOMAINS by by JTakyLR/check_reg_discovery[reg_daysleft {#REG_DOMAINS}])<=0'
+                  tags:
+                    -
+                      tag: EntityType
+                      value: reg_domains
+                -
+                  uuid: e96b4b5a8cb6433a946759d2c537704a
+                  expression: 'last(/Template CHECK DOMAINS by by JTakyLR/check_reg_discovery[reg_daysleft {#REG_DOMAINS}])<=0'
+                  name: 'Истек срок регистрации домена - {#REG_DOMAINS}'
+                  opdata: 'Осталось дней: {ITEM.LASTVALUE1}'
+                  priority: HIGH
+                  tags:
+                    -
+                      tag: EntityType
+                      value: reg_domains
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.data
+        -
+          uuid: 9b8c4b0ec73745b29dbacd2995a3389f
+          name: 'check_ssl_discovery[ssl_domains]'
+          key: 'check_ssl_discovery[ssl_domains]'
+          delay: 2h
+          lifetime: 0d
+          item_prototypes:
+            -
+              uuid: 0d33e6706edb495281708f272c9bbc70
+              name: 'SSL DOMAIN DAYS LEFT {#SSL_DOMAINS}'
+              key: 'check_ssl_discovery[ssl_daysleft {#SSL_DOMAINS}]'
+              delay: 0h;h9
+              history: 7d
+              value_type: FLOAT
+              tags:
+                -
+                  tag: Application
+                  value: ssl_domains
+              trigger_prototypes:
+                -
+                  uuid: 5d3a6307226c4fd5a69aac9934b94f02
+                  expression: 'last(/Template CHECK DOMAINS by by JTakyLR/check_ssl_discovery[ssl_daysleft {#SSL_DOMAINS}])<{$SSL_DAY_EXPIRE}'
+                  name: 'Истекает срок действия сертификата для  {#SSL_DOMAINS}'
+                  opdata: 'Осталось дней: {ITEM.LASTVALUE1}'
+                  priority: WARNING
+                  dependencies:
+                    -
+                      name: 'Истек срок действия сертификата для {#SSL_DOMAINS}'
+                      expression: 'last(/Template CHECK DOMAINS by by JTakyLR/check_ssl_discovery[ssl_daysleft {#SSL_DOMAINS}])<=0'
+                  tags:
+                    -
+                      tag: EntityType
+                      value: ssl_domains
+                -
+                  uuid: ed33e6e03eca4640b58f5fd3b0edebd0
+                  expression: 'last(/Template CHECK DOMAINS by by JTakyLR/check_ssl_discovery[ssl_daysleft {#SSL_DOMAINS}])<=0'
+                  name: 'Истек срок действия сертификата для {#SSL_DOMAINS}'
+                  opdata: 'Осталось дней: {ITEM.LASTVALUE1}'
+                  priority: HIGH
+                  tags:
+                    -
+                      tag: EntityType
+                      value: ssl_domains
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.data
+      macros:
+        -
+          macro: '{$CRL_DAY_EXPIRE}'
+          value: '14'
+        -
+          macro: '{$REG_DAY_EXPIRE}'
+          value: '28'
+        -
+          macro: '{$SSL_DAY_EXPIRE}'
+          value: '28'
