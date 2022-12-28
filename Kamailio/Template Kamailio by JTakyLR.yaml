@@ -1,0 +1,172 @@
+zabbix_export:
+  version: '5.4'
+  date: '2022-12-28T15:49:49Z'
+  groups:
+    -
+      uuid: a571c0d144b14fd4a87a9d9b2aa9fcd6
+      name: Templates/Applications
+  templates:
+    -
+      uuid: 21b0fc026cbf4823a6dc0a0153fa2237
+      template: 'Template Kamailio by JTakyLR'
+      name: 'Template Kamailio by JTakyLR'
+      groups:
+        -
+          name: Templates/Applications
+      items:
+        -
+          uuid: eebb84cacff548df970825de86f111f1
+          name: 'dlg: stats_active all'
+          key: 'stats[dlg_stats_active_all]'
+          delay: 30s
+          history: 7d
+          tags:
+            -
+              tag: Application
+              value: dlg
+        -
+          uuid: d6704adf1de14f7e987b67eeaedd72a4
+          name: 'shmem: fragments'
+          key: 'stats[shmem_fragments]'
+          history: 7d
+          units: B
+          tags:
+            -
+              tag: Application
+              value: shmem
+        -
+          uuid: 331ea9c8b6434481a38f876c5ea0d597
+          name: 'shmem: free_size'
+          key: 'stats[shmem_free_size]'
+          history: 7d
+          units: B
+          tags:
+            -
+              tag: Application
+              value: shmem
+          triggers:
+            -
+              uuid: 79fe780899014be69260bd21bb4c955f
+              expression: 'last(/Template Kamailio by JTakyLR/stats[shmem_free_size])<{$FREE_SIZE}'
+              name: 'Количество свободной общей памяти меньше допустимого порога'
+              status: DISABLED
+              priority: HIGH
+        -
+          uuid: 57600300a23847c29209876cc4afde86
+          name: 'shmem: free_size_percent'
+          type: CALCULATED
+          key: 'stats[shmem_free_size_percent]'
+          history: 7d
+          value_type: FLOAT
+          params: '100*last(//stats[shmem_free_size])/last(//stats[shmem_total_size])'
+          tags:
+            -
+              tag: Application
+              value: shmem
+          triggers:
+            -
+              uuid: b1727ef8b7204ab4bd6489d02fbe5708
+              expression: 'last(/Template Kamailio by JTakyLR/stats[shmem_free_size_percent])<{$FREE_SIZE_DISASTER}'
+              name: 'Количество свободной общей памяти меньше {$FREE_SIZE_DISASTER}'
+              priority: DISASTER
+            -
+              uuid: e715e3c89384440ea3d5f97fc92cfef1
+              expression: 'last(/Template Kamailio by JTakyLR/stats[shmem_free_size_percent])<{$FREE_SIZE_INFO}'
+              name: 'Количество свободной общей памяти меньше {$FREE_SIZE_INFO}'
+              priority: INFO
+              dependencies:
+                -
+                  name: 'Количество свободной общей памяти меньше {$FREE_SIZE_WARNING}'
+                  expression: 'last(/Template Kamailio by JTakyLR/stats[shmem_free_size_percent])<{$FREE_SIZE_WARNING}'
+            -
+              uuid: 5078562d0a1440818d3dbc468e55dbcf
+              expression: 'last(/Template Kamailio by JTakyLR/stats[shmem_free_size_percent])<{$FREE_SIZE_WARNING}'
+              name: 'Количество свободной общей памяти меньше {$FREE_SIZE_WARNING}'
+              priority: WARNING
+              dependencies:
+                -
+                  name: 'Количество свободной общей памяти меньше {$FREE_SIZE_DISASTER}'
+                  expression: 'last(/Template Kamailio by JTakyLR/stats[shmem_free_size_percent])<{$FREE_SIZE_DISASTER}'
+        -
+          uuid: b637173d6a4d40dabedd8bbc420b156b
+          name: 'shmem: max_used_size'
+          key: 'stats[shmem_max_used_size]'
+          history: 7d
+          units: B
+          tags:
+            -
+              tag: Application
+              value: shmem
+        -
+          uuid: f0c70def43af4cb98e0019664fa3679e
+          name: 'shmem: real_used_size'
+          key: 'stats[shmem_real_used_size]'
+          history: 7d
+          units: B
+          tags:
+            -
+              tag: Application
+              value: shmem
+        -
+          uuid: dc0984bed03744c9b39244bc6e6177fc
+          name: 'shmem: total_size'
+          key: 'stats[shmem_total_size]'
+          history: 7d
+          units: B
+          tags:
+            -
+              tag: Application
+              value: shmem
+        -
+          uuid: 69608e343b9f445e9df6ec2f4a724ccb
+          name: 'shmem: used_size'
+          key: 'stats[shmem_used_size]'
+          history: 7d
+          units: B
+          tags:
+            -
+              tag: Application
+              value: shmem
+        -
+          uuid: 2ae2f1ec4f1b4f2d96f489810ad3a96a
+          name: 'tmx: active_transactions'
+          key: 'stats[tmx_active_transactions]'
+          history: 7d
+          tags:
+            -
+              tag: Application
+              value: tmx
+        -
+          uuid: 25122784ba134737ad30d28e8fa37b66
+          name: 'tm: current'
+          key: 'stats[tm_current]'
+          history: 7d
+          tags:
+            -
+              tag: Application
+              value: tm
+        -
+          uuid: 5839ca5e651e4eaebedb2134a32ed9b3
+          name: 'shmem: real_used_size_percent'
+          type: CALCULATED
+          key: 'status[shmem_real_used_size_percent]'
+          history: 7d
+          value_type: FLOAT
+          params: '100*last(//stats[shmem_real_used_size])/last(//stats[shmem_total_size])'
+          tags:
+            -
+              tag: Application
+              value: shmem
+      macros:
+        -
+          macro: '{$FREE_SIZE}'
+          value: '1024000000'
+        -
+          macro: '{$FREE_SIZE_DISASTER}'
+          value: '15'
+        -
+          macro: '{$FREE_SIZE_INFO}'
+          value: '50'
+        -
+          macro: '{$FREE_SIZE_WARNING}'
+          value: '30'
