@@ -38,7 +38,10 @@ if [ $# -ne 0 ]
 then
 	case $1 in
 		reg_domains)
-			cat ${REG_DOMAINS} | awk -v ORS="" 'BEGIN { print "{\"data\":["} { print "{\"{#REG_DOMAINS}\":\""$1"\"}," } END { print "]}" }' | sed 's/,]}$/]}\n/' ;;
+			cat "${REG_DOMAINS}" | awk '!seen[$1]++ && $1 != "" {print $1}' | awk -v ORS="" '
+BEGIN {print "{\"data\":["}
+{print "{\"{#REG_DOMAINS}\":\""$1"\"},"}
+END {print "]}"}' | sed 's/,]}$/]}\n/' ;;
 		reg_datepaid)
 			if [ $# -eq 2 ]
 			then
